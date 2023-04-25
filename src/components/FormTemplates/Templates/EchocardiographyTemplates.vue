@@ -1,6 +1,6 @@
 <template>
-  <div class="scroll-container" :style="{ height: containerHeight }">
-    <el-scrollbar class="scrollbar">
+  <div class="scroll-container" >
+    <el-scrollbar class="scrollbar" :height="tableHeight">
       <el-card>
         <echocardiography ref="ec"></echocardiography>
       </el-card>
@@ -13,9 +13,10 @@
 
 <script>
 import Echocardiography from "@/components/FormTemplates/EC/Echocardiography.vue";
-import useHeightMixin from "@/mixins/heightMixin";
+import {useWindowHeightWatcher} from "@/utils/windowHeightWatcher";
+import {computed} from "vue";
 export default {
-  mixins: [useHeightMixin,],
+
   name: "EchocardiographyTemplates",
   components: {
     Echocardiography,
@@ -28,6 +29,17 @@ export default {
 
       // const mergedData = Object.assign({}, this.formData.formA, /* 其他表单组件的数据 */)
     },},
+  setup() {
+    // 自适应高度
+    const {windowHeight} = useWindowHeightWatcher();
+    const tableHeight = computed(() => {
+      // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
+      return windowHeight.value - 250;
+    });
+    return {
+      tableHeight,
+    };
+  }
 }
 </script>
 

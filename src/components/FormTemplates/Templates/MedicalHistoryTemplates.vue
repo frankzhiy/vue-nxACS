@@ -1,6 +1,6 @@
 <template>
-  <div class="scroll-container" :style="{ height: containerHeight }">
-      <el-scrollbar class="scrollbar">
+  <div class="scroll-container" >
+      <el-scrollbar class="scrollbar" :height="tableHeight">
         <el-card >
           <medication-history ref="mh"></medication-history>
           <personal-history ref="ph"></personal-history>
@@ -28,11 +28,12 @@ import TreatmentOptions from "@/components/FormTemplates/MHT/TreatmentOptions.vu
 import PreoperativeMedication from "@/components/FormTemplates/MHT/PreoperativeMedication.vue";
 import Discharge from "@/components/FormTemplates/MHT/Discharge.vue";
 import DischargeDiagnosis from "@/components/FormTemplates/MHT/DischargeDiagnosis.vue";
-import useHeightMixin from "@/mixins/heightMixin";
 import {mhtFormStore} from "@/store/formStore";
+import {useWindowHeightWatcher} from "@/utils/windowHeightWatcher";
+import {computed} from "vue";
 const  formStore = mhtFormStore();
 export default {
-  mixins: [useHeightMixin],
+
   name: "MedicalHistoryTemplates",
   components: {
     MedicationHistory, PersonalHistory, FirstMedicalContact, DiagnosticEvaluation, TreatmentOptions
@@ -46,8 +47,13 @@ export default {
     }
   },
   setup() {
+    const {windowHeight} = useWindowHeightWatcher();
+    const tableHeight = computed(() => {
+      // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
+      return windowHeight.value - 250;
+    });
     return {
-
+      tableHeight,
     };
   },
 

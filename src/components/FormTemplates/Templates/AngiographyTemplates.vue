@@ -1,6 +1,6 @@
 <template>
-  <div class="scroll-container" :style="{ height: containerHeight }">
-    <el-scrollbar class="scrollbar">
+  <div class="scroll-container" >
+    <el-scrollbar class="scrollbar" :height="tableHeight">
       <el-card>
         <admission-route ref="ar"></admission-route>
         <operate ref="op"></operate>
@@ -15,13 +15,15 @@
 </template>
 
 <script>
-import useHeightMixin from "@/mixins/heightMixin";
+
 import AdmissionRoute from "@/components/FormTemplates/AN/AdmissionRoute.vue";
 import Operate from "@/components/FormTemplates/AN/Operate.vue";
 import BasicInformation from "@/components/FormTemplates/AN/BasicInformation.vue";
 import DischargeInstructions from "@/components/FormTemplates/AN/DischargeInstructions.vue";
+import {useWindowHeightWatcher} from "@/utils/windowHeightWatcher";
+import {computed} from "vue";
 export default {
-  mixins: [useHeightMixin],
+
   name: "Angiography",
   components: {
     AdmissionRoute,
@@ -37,7 +39,17 @@ export default {
 
       // const mergedData = Object.assign({}, this.formData.formA, /* 其他表单组件的数据 */)
     },},
-
+  setup() {
+    //自适应高度
+    const {windowHeight} = useWindowHeightWatcher();
+    const tableHeight = computed(() => {
+      // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
+      return windowHeight.value - 250;
+    });
+    return {
+      tableHeight,
+    };
+  },
 }
 </script>
 

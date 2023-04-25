@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="form" label-width="180px" :label-position="'top'" :size="'small'">
+  <el-form :model="form" label-width="180px" label-position="left" :size="'small'">
     <el-form-item label="身高" prop="h">
       <el-input v-model.number="form.h" type="number" placeholder="cm"></el-input>
     </el-form-item>
@@ -55,5 +55,10 @@ export default {
 </script>
 
 <style scoped>
-
+.el-input{
+  width: 160px;
+}
+.el-card{
+  margin-bottom: 10px;
+}
 </style>

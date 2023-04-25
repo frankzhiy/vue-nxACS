@@ -1,6 +1,6 @@
 <template>
-  <div class="scroll-container" :style="{ height: containerHeight }">
-    <el-scrollbar class="scrollbar">
+  <div class="scroll-container" >
+    <el-scrollbar class="scrollbar" :height="tableHeight">
       <el-card>
         <Test ref="test"></Test>
       </el-card>
@@ -14,13 +14,11 @@
 <script>
 
 import Test from "@/components/FormTemplates/TEST/Test.vue";
-import useHeightMixin from "@/mixins/heightMixin";
-import {defineComponent, onBeforeUnmount, onMounted, provide, ref, watch,} from "vue";
+import {computed, defineComponent, onBeforeUnmount, onMounted, provide, ref, watch,} from "vue";
 import { testFormStore } from '@/store/formStore'
+import {useWindowHeightWatcher} from "@/utils/windowHeightWatcher";
 const  formStore = testFormStore();
 export default defineComponent({
-
-  mixins: [useHeightMixin,],
   name: "TestTemplates",
   components: {
     Test,
@@ -46,6 +44,15 @@ export default defineComponent({
       console.log('成功进入')
 
     });
+    //自适应高度
+    const {windowHeight} = useWindowHeightWatcher();
+    const tableHeight = computed(() => {
+      // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
+      return windowHeight.value - 250;
+    });
+    return {
+      tableHeight,
+    };
   },
 
 });

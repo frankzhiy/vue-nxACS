@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="form" label-width="180px" :label-position="'top'" :size="'small'" >
+  <el-form :model="form" label-width="180px" :label-position="'left'" :size="'small'" >
     <el-form-item label="首次C反应蛋白" prop="crp">
       <el-input v-model.number="form.t1" type="number"></el-input>
     </el-form-item>
@@ -414,9 +414,12 @@ export default {
 <style scoped>
 .el-form-item{
   /*display: flex;*/
-  width: 30%;
+  /*width: 30%;*/
   float: left;
   margin-left: 20px;
   margin-right:20px;
+}
+.el-input{
+  width: 160px;
 }
 </style>

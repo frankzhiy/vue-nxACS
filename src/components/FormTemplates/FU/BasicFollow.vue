@@ -1,21 +1,21 @@
 <template>
-  <el-form :model="form" label-width="180px" :size="'small'">
-    <el-form-item label="B3 院内死亡?">
+  <el-form :model="form" label-width="180px" :size="'small'" label-position="left">
+    <el-form-item label="院内死亡?">
       <el-radio-group v-model="form.b3">
         <el-radio :label="0">否</el-radio>
         <el-radio :label="1">是</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="N1 随访具体时间">
+    <el-form-item label="随访具体时间">
       <el-date-picker v-model="form.n1" type="date" placeholder="选择日期" format="YYYY-MM-DD"  value-format="DD/MM/YYYY" ></el-date-picker>
     </el-form-item>
-    <el-form-item label="N2 是否失访？">
+    <el-form-item label="是否失访？">
       <el-radio-group v-model="form.n2">
         <el-radio :label="0">否</el-radio>
         <el-radio :label="1">是</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="N3 生活质量？">
+    <el-form-item label="生活质量？">
       <el-select v-model="form.n3" placeholder="选择生活质量">
         <el-option :label="'死亡'" :value="0"></el-option>
         <el-option :label="'回复原来工作、生活状态'" :value="1"></el-option>
@@ -23,19 +23,19 @@
         <el-option :label="'在家休息，状态差'" :value="3"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="N4 是否规律随访？">
+    <el-form-item label="是否规律随访？">
       <el-radio-group v-model="form.n4">
         <el-radio :label="0">否</el-radio>
         <el-radio :label="1">是</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="N5 是否严格戒烟？">
+    <el-form-item label="是否严格戒烟？">
       <el-radio-group v-model="form.n5">
         <el-radio :label="0">否</el-radio>
         <el-radio :label="1">是</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="N6 血压控制？">
+    <el-form-item label="血压控制？">
       <el-radio-group v-model="form.n6">
         <el-radio :label="0">未监测</el-radio>
         <el-radio :label="1">监测后140/90以内</el-radio>
@@ -58,22 +58,6 @@ import {fuFormStore} from "@/store/formStore";
 
 export default {
   name: "basicFollow",
-  methods:{
-  },
-  data() {
-    return {
-      // form: {
-      //   b3: '',
-      //   n1: '',
-      //   n2: '',
-      //   n3: '',
-      //   n4: '',
-      //   n5: '',
-      //   n6: '',
-      //   n7: '',
-      // }
-    }
-  },
   setup() {
     const form = fuFormStore().form
     return {
@@ -85,8 +69,7 @@ export default {
 </script>
 
 <style scoped>
-.el-form-item{
-  /*display: flex;*/
-  width: 30%;
+.el-input{
+  width: 160px;
 }
 </style>

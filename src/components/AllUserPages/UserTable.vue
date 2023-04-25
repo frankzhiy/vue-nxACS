@@ -1,44 +1,44 @@
 <template>
-  <el-table stripe :data="displayedUsers" :height="tableHeight" :fit="true"
-            :header-row-style="{ height: '60px',fontSize: '16px' }">
-    <el-table-column prop="serialNumber" label="序号" width="60"></el-table-column>
-    <el-table-column prop="caseNumber" label="案例编号" width="100"></el-table-column>
-    <el-table-column prop="timeOfAdmission" label="入院时间" width="100"></el-table-column>
-    <el-table-column label="列4"></el-table-column>
-    <el-table-column label="列5"></el-table-column>
-    <el-table-column label="列6"></el-table-column>
-    <el-table-column label="列7"></el-table-column>
-    <el-table-column label="列8"></el-table-column>
-    <el-table-column label="列9"></el-table-column>
-    <el-table-column label="操作" fixed="right">
-      <template v-slot="{ row }">
-        <el-button link type="info" style="display: inline-block" @click="viewDetails(row)">详情
-        </el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+    <el-table stripe :data="displayedUsers" :fit="true" :max-height="tableHeight"
+              :header-row-style="{ height: '60px',fontSize: '16px' }">
+      <el-table-column prop="serialNumber" label="序号" width="60"></el-table-column>
+      <el-table-column prop="caseNumber" label="案例编号" width="100"></el-table-column>
+      <el-table-column prop="timeOfAdmission" label="入院时间" width="100"></el-table-column>
+      <el-table-column label="列4"></el-table-column>
+      <el-table-column label="列5"></el-table-column>
+      <el-table-column label="列6"></el-table-column>
+      <el-table-column label="列7"></el-table-column>
+      <el-table-column label="列8"></el-table-column>
+      <el-table-column label="列9"></el-table-column>
+      <el-table-column label="操作" fixed="right">
+        <template v-slot="{ row }">
+          <el-button link type="info" style="display: inline-block" @click="viewDetails(row)">详情
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination
+        background
+        v-model="currentPage"
+        :page-sizes="[20, 30, 50, 70]"
+        :page-size="pageSize"
+        :page-count="totalPages"
+        :pager-count="5"
+        :total="totalCount"
+        :i18n="paginationI18n"
+        layout="total,->, sizes, prev, pager, next, jumper"
+        @size-change="onChangePageSize"
+        @current-change="onChangePage"
+    ></el-pagination>
 
-  <el-pagination
-      background
-      v-model="currentPage"
-      :page-sizes="[20, 30, 50, 70]"
-      :page-size="pageSize"
-      :page-count="totalPages"
-      :pager-count="5"
-      :total="totalCount"
-      :i18n="paginationI18n"
-      layout="total,->, sizes, prev, pager, next, jumper"
-      @size-change="onChangePageSize"
-      @current-change="onChangePage"
-  ></el-pagination>
   <el-dialog v-model="detailsDialogVisible" title="患者详情" width="90%" center style="overflow: hidden">
     <div style="overflow-y: auto">
 
 
-    <div style="display: flex; flex-direction: row; ">
-      <div style="margin-right: 15px">案例编号: {{ selectedPatient.caseNumber }}</div>
-      <div>入院时间: {{ selectedPatient.timeOfAdmission }}</div>
-    </div>
+      <div style="display: flex; flex-direction: row; ">
+        <div style="margin-right: 15px">案例编号: {{ selectedPatient.caseNumber }}</div>
+        <div>入院时间: {{ selectedPatient.timeOfAdmission }}</div>
+      </div>
 
       <result-form-tabs :case-number="selectedPatient.caseNumber"
                         :key="selectedPatient.caseNumber"></result-form-tabs>
@@ -48,11 +48,13 @@
 
 <script>
 import {getAllUser} from "@/utils/api";
-import {ref, onMounted, computed, onBeforeUnmount, nextTick, watch} from "vue";
+import {ref, onMounted, computed, onBeforeUnmount, nextTick, watch, watchEffect} from "vue";
 import ResultFormTabs from "@/components/Basic/ResultFormTabs.vue";
+import {useWindowHeightWatcher} from "@/utils/windowHeightWatcher";
 
 export default {
   components: {ResultFormTabs},
+
   setup() {
     const users = ref([]);
     // 请求数据
@@ -117,22 +119,26 @@ export default {
       currentPage.value = 1;
     };
 
-
     //自适应患者数量
-    function updatePageSize() {
-      const headerHeight = 50; // 根据实际情况调整表头高度
-      const footerHeight = 50; // 根据实际情况调整分页器高度
-      const rowHeight = 50;    // 根据实际情况调整行高
-      const availableHeight = window.innerHeight - headerHeight - footerHeight;
-      const rowsPerPage = Math.floor(availableHeight / rowHeight);
-      pageSize.value = Math.max(rowsPerPage, 1); // 确保每页至少显示一条记录
-    };
-
-    // 计算表格高度
+    // function updatePageSize() {
+    //   const headerHeight = 50; // 根据实际情况调整表头高度
+    //   const footerHeight = 50; // 根据实际情况调整分页器高度
+    //   const rowHeight = 50;    // 根据实际情况调整行高
+    //   const availableHeight = window.innerHeight - headerHeight - footerHeight;
+    //   const rowsPerPage = Math.floor(availableHeight / rowHeight);
+    //   pageSize.value = Math.max(rowsPerPage, 1); // 确保每页至少显示一条记录
+    // };
+    const { windowHeight } = useWindowHeightWatcher();
     const tableHeight = computed(() => {
       // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
-      return window.innerHeight - 250;
+      return windowHeight.value - 250;
     });
+
+    // 计算表格高度
+    // const tableHeight = computed(() => {
+    //   // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
+    //   return window.innerHeight - 250;
+    // });
 
 
     onMounted(() => {
@@ -152,9 +158,9 @@ export default {
       onChangePageSize,
       totalCount,
       paginationI18n,
-      tableHeight,
       detailsDialogVisible,
       selectedPatient,
+      tableHeight,
     };
   },
 };
@@ -171,7 +177,6 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
-
 
 
 </style>

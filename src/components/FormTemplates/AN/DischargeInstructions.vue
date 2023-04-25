@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="form" label-width="180px" :label-position="'top'" :size="'small'">
+  <el-form :model="form" label-width="180px" label-position="left" :size="'small'">
     <el-form-item label="阿司匹林">
       <el-radio-group v-model="form.f1">
         <el-radio label="0">否</el-radio>

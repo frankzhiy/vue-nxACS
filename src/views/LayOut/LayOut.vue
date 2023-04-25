@@ -32,7 +32,7 @@
 
 
 <script>
-import UserAvatar from "@/components/userAvatar.vue";
+import UserAvatar from "@/components/Basic/userAvatar.vue";
 
 export default {
   name: 'LayOut',

@@ -3,7 +3,7 @@
     <el-tabs tab-position="top" v-model="activeTab" @tab-change="changeTab">
       <el-tab-pane label="病史详情" name="medicalHistoryResult">
         <!-- 病史问卷表单内容 -->
-                <medical-history-result-templates></medical-history-result-templates>
+        <medical-history-result-templates></medical-history-result-templates>
       </el-tab-pane>
       <el-tab-pane label="检验详情" name="testResult">
         <!-- 检验问卷表单内容 -->
@@ -11,15 +11,15 @@
       </el-tab-pane>
       <el-tab-pane label="随访详情" name="followUpResult">
         <!-- 随访问卷表单内容 -->
-
+        <follow-up-result-templates></follow-up-result-templates>
       </el-tab-pane>
       <el-tab-pane label="心超详情" name="echocardiographyResult">
         <!-- 心超问卷表单内容 -->
-
+        <echocardiography-result-templates></echocardiography-result-templates>
       </el-tab-pane>
       <el-tab-pane label="造影详情" name="angiographyResult">
         <!-- 造影问卷表单内容 -->
-
+        <angiography-result-templates></angiography-result-templates>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -34,16 +34,23 @@ import {
   angiographyResultAttributeDataStore,
   medicalHistoryResultAttributeDataStore,
   echocardiographyResultAttributeDataStore,
+
 } from "@/store/resultFormStore";
 
 import TestResultTemplates from "@/components/ResultFormTemplates/TestResultTemplates.vue";
 import MedicalHistoryResultTemplates from "@/components/ResultFormTemplates/MedicalHistoryResultTemplates.vue";
-
+import FollowUpResultTemplates from "@/components/ResultFormTemplates/FollowUpResultTemplates.vue";
+import EchocardiographyResultTemplates from "@/components/ResultFormTemplates/EchocardiographyResultTemplates.vue";
+import AngiographyResultTemplates from "@/components/ResultFormTemplates/AngiographyResultTemplates.vue";
+import { useWindowHeightWatcher } from "@/utils/windowHeightWatcher";
 export default {
   name: "ResultFormTabs",
   components: {
     TestResultTemplates,
-    MedicalHistoryResultTemplates
+    MedicalHistoryResultTemplates,
+    FollowUpResultTemplates,
+    EchocardiographyResultTemplates,
+    AngiographyResultTemplates,
   },
   props: {
     caseNumber: String,
@@ -99,33 +106,6 @@ export default {
         console.error("响应数据为空数组");
       }
     };
-    // const fetchTabData = async (tabName) => {
-    //   const url = `/basic/${tabName}`; // 根据实际情况修改 API 路径
-    //   const response = await getCaseDetails(props.caseNumber, url);
-    //   // console.log(`获取 ${tabName} 数据成功:`, response);
-    //   // 将 attribute 字符串转换为对象
-    //   if (response.length > 0) {
-    //     const responseObject = response[0];
-    //     // 保存 attribute 到 store
-    //     attributeDataStore.saveAttributeData(props.caseNumber, responseObject.attribute);
-    //   } else {
-    //     console.error("响应数据为空数组");
-    //   }
-    // };
-    // const fetchTabData = async (tabName) => {
-    //   const url = `/basic/${tabName}`; // 根据实际情况修改 API 路径
-    //   const response = await getCaseDetails(props.caseNumber, url);
-    //   // console.log(`获取 ${tabName} 数据成功:`, response);
-    //   // 将 attribute 字符串转换为对象
-    //   if (response.length > 0) {
-    //     const responseObject = response[0];
-    //     // 保存 attribute 到对应的 store
-    //     attributeDataStore.saveAttributeData(tabName, props.caseNumber, responseObject.attribute);
-    //   } else {
-    //     console.error("响应数据为空数组");
-    //   }
-    // };
-
     // 监听 activeTab 变化
     watch(activeTab, (newValue) => {
       fetchTabData(newValue);
@@ -133,7 +113,6 @@ export default {
     return {
       changeTab,
       activeTab,
-
     };
 
 

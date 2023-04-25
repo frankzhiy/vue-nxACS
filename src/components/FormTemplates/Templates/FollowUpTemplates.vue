@@ -1,6 +1,6 @@
 <template>
-  <div class="scroll-container" :style="{ height: containerHeight }">
-    <el-scrollbar class="scrollbar">
+  <div class="scroll-container" >
+    <el-scrollbar class="scrollbar" :height="tableHeight">
       <el-card>
         <basic-follow ref="bf"></basic-follow>
         <death ref="d"></death>
@@ -18,17 +18,17 @@
 
 <script>
 import BasicFollow from "@/components/FormTemplates/FU/BasicFollow.vue";
-import {ref} from "vue";
-import useHeightMixin from "@/mixins/heightMixin";
+import {computed, ref} from "vue";
 import AdverseCardiovascular from "@/components/FormTemplates/FU/AdverseCardiovascular.vue";
 import Angina from "@/components/FormTemplates/FU/Angina.vue";
 import Arrhythmia from "@/components/FormTemplates/FU/Arrhythmia.vue";
 import OralDrug from "@/components/FormTemplates/FU/OralDrug.vue";
 import Death from "@/components/FormTemplates/FU/Death.vue";
 import {fuFormStore,} from "@/store/formStore";
+import {useWindowHeightWatcher} from "@/utils/windowHeightWatcher";
 const  formStore = fuFormStore();
 export default {
-  mixins: [useHeightMixin],
+
   name: "FollowUpTemplates",
   components: {
     BasicFollow,
@@ -46,9 +46,14 @@ export default {
     }
   },
   setup() {
-
-
-    return {};
+    const {windowHeight} = useWindowHeightWatcher();
+    const tableHeight = computed(() => {
+      // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
+      return windowHeight.value - 250;
+    });
+    return {
+      tableHeight,
+    };
   },
 }
 </script>

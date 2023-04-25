@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="form" label-width="180px" :label-position="'top'" :size="'small'" >
+  <el-form :model="form" label-width="180px" label-position="left" :size="'small'" >
     <el-form-item label="升主动脉内径" prop="crp">
       <el-input v-model.number="form.c1" type="number" placeholder="mm"></el-input>
     </el-form-item>
@@ -124,5 +124,7 @@ export default {
 </script>
 
 <style scoped>
-
+.el-input{
+  width: 160px;
+}
 </style>

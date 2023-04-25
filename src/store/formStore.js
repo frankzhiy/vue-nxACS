@@ -383,6 +383,7 @@ export const fuFormStore = defineStore({
             i131: '',
             i132: '',
             i133: '',
+            i134: '',
             i14: '',
             i141: '',
             i142: '',
