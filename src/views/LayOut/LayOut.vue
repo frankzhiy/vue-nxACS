@@ -18,7 +18,7 @@
             default-active="/allUser"
         >
           <el-menu-item index="/allUser">患者列表</el-menu-item>
-          <el-menu-item index="/fellow">随访患者/患者评估</el-menu-item>
+          <el-menu-item index="/fellow">患者评估</el-menu-item>
           <el-menu-item index="/warning">预警患者</el-menu-item>
           <el-menu-item index="/statistic">统计分析</el-menu-item>
         </el-menu>

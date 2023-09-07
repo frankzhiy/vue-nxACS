@@ -35,7 +35,6 @@ export const getCaseDetails = async (caseNumber, url) => {
         });
         return response;
     } catch (error) {
-        // console.error('Error fetching case details:', error);
         handleError(error, 'Error fetching user data:');
     }
 };
@@ -61,5 +60,20 @@ export const submitPatientData = async (formData) => {
         return response;
     } catch (error) {
         handleError(error, 'Error submitting patient data:');
+    }
+};
+
+// 删除患者数据
+export const deletePatient = async (caseNumber, timeOfAdmission) => {
+    try {
+        const response = await http.delete('/basic/deleteInfo', {
+            params: {
+                caseNumber,
+                timeOfAdmission
+            }
+        });
+        return response;
+    } catch (error) {
+        handleError(error, 'Error deleting patient data:');
     }
 };

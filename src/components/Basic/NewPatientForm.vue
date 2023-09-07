@@ -24,7 +24,6 @@ export default {
     //提交患者数据
     const submitAllForm = async () => {
       const allFormData = formTabsRef.value.collectAllFormData();
-      console.log(JSON.stringify(allFormData));
       try {
         const response = await submitPatientData(JSON.stringify(allFormData));
         await ElMessage.success({  // 使用ElMessage显示成功消息

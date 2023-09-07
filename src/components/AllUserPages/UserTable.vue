@@ -1,35 +1,36 @@
 <template>
-    <el-table stripe :data="displayedUsers" :fit="true" :max-height="tableHeight"
-              :header-row-style="{ height: '60px',fontSize: '16px' }">
-      <el-table-column prop="serialNumber" label="序号" width="60"></el-table-column>
-      <el-table-column prop="caseNumber" label="案例编号" width="90"></el-table-column>
-      <el-table-column prop="timeOfAdmission" label="入院时间" width="110"></el-table-column>
-      <el-table-column label="列4"></el-table-column>
-      <el-table-column label="列5"></el-table-column>
-      <el-table-column label="列6"></el-table-column>
-      <el-table-column label="列7"></el-table-column>
-      <el-table-column label="列8"></el-table-column>
-      <el-table-column label="列9"></el-table-column>
-      <el-table-column label="操作" fixed="right" width="60">
-        <template v-slot="{ row }">
-          <el-button link type="info" style="display: inline-block" @click="viewDetails(row)">详情
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination
-        background
-        v-model="currentPage"
-        :page-sizes="[20, 30, 50, 70]"
-        :page-size="pageSize"
-        :page-count="totalPages"
-        :pager-count="5"
-        :total="totalCount"
-        :i18n="paginationI18n"
-        layout="total,->, sizes, prev, pager, next, jumper"
-        @size-change="onChangePageSize"
-        @current-change="onChangePage"
-    ></el-pagination>
+  <el-table stripe :data="displayedUsers" :fit="true" :max-height="tableHeight"
+            :header-row-style="{ height: '60px',fontSize: '16px' }">
+    <el-table-column prop="serialNumber" label="序号" width="80"></el-table-column>
+    <el-table-column prop="caseNumber" label="案例编号" width="110"></el-table-column>
+    <el-table-column prop="timeOfAdmission" label="入院时间" width="120"></el-table-column>
+    <el-table-column label="列4" align="center"></el-table-column>
+    <el-table-column label="列5" align="center"></el-table-column>
+    <el-table-column label="列6" align="center"></el-table-column>
+    <el-table-column label="列7" align="center"></el-table-column>
+    <el-table-column label="列8" align="center"></el-table-column>
+    <el-table-column label="操作" fixed="right" width="120">
+      <template v-slot="{ row }">
+        <el-button link type="info" style="display: inline-block" @click="viewDetails(row)">详情
+        </el-button>
+        <el-button link type="danger" style="display: inline-block" @click="handleDelete(row)">删除</el-button>
+      </template>
+    </el-table-column>
+
+  </el-table>
+  <el-pagination
+      background
+      v-model="currentPage"
+      :page-sizes="[20, 30, 50, 70]"
+      :page-size="pageSize"
+      :page-count="totalPages"
+      :pager-count="5"
+      :total="totalCount"
+      :i18n="paginationI18n"
+      layout="total,->, sizes, prev, pager, next, jumper"
+      @size-change="onChangePageSize"
+      @current-change="onChangePage"
+  ></el-pagination>
 
   <el-dialog v-model="detailsDialogVisible" title="患者详情" width="90%" center style="overflow: hidden">
     <div style="overflow-y: auto">
@@ -47,12 +48,14 @@
 </template>
 
 <script>
-import {getAllUser} from "@/utils/api";
-import {ref, onMounted, computed, onBeforeUnmount, nextTick, watch, watchEffect} from "vue";
+import {deletePatient, getAllUser} from "@/utils/api";
+import {computed, nextTick, onMounted, ref, watch} from "vue";
 import ResultFormTabs from "@/components/Basic/ResultFormTabs.vue";
 import {useWindowHeightWatcher} from "@/utils/windowHeightWatcher";
+import {ElMessage} from "element-plus";
 
 export default {
+  methods: {deletePatient},
   components: {ResultFormTabs},
 
   setup() {
@@ -61,7 +64,7 @@ export default {
     // TODO:修改提示失败框
     const fetchUsers = async () => {
       //TODO：需要修改管理医生
-      const manageDoctors = 1001; // 登陆后缓存的用户信息替代。设置为你想要的 manageDoctors 值
+      const manageDoctors = 1001;
       const response = await getAllUser(manageDoctors);
 
       // 患者进行排序
@@ -70,20 +73,20 @@ export default {
       });
 
       users.value = response;
-      localStorage.setItem("users", JSON.stringify(response));
+      console.log("users:", users)
+      // localStorage.setItem("users", JSON.stringify(response));
     };
 
     // TODO：本地还是非本地加载用户数据，需要改
-    if (!localStorage.getItem("users")) {
-      fetchUsers();
-    } else {
-      users.value = JSON.parse(localStorage.getItem("users"));
-    }
+    // if (!localStorage.getItem("users")) {
+    //   fetchUsers();
+    // } else {
+    //   users.value = JSON.parse(localStorage.getItem("users"));
+    // }
     // 查看详情功能按钮
     const detailsDialogVisible = ref(false);
     const selectedPatient = ref({});
     const viewDetails = async (row) => {
-      console.log('Clicked view details');
       selectedPatient.value = row;
       await nextTick();
       detailsDialogVisible.value = true;
@@ -126,7 +129,7 @@ export default {
       currentPage.value = 1;
     };
     //自适应高度
-    const { windowHeight } = useWindowHeightWatcher();
+    const {windowHeight} = useWindowHeightWatcher();
     const tableHeight = computed(() => {
       // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
       return windowHeight.value - 250;
@@ -137,6 +140,20 @@ export default {
       console.log("users:", users);
     });
 
+    const handleDelete = async (row) => {
+      try {
+        await deletePatient(row.caseNumber, row.timeOfAdmission);
+        ElMessage.success({
+          message: '患者删除成功！',
+          duration: 5000,
+          showClose: true,
+        });
+        // After deleting, you might want to refresh the data
+        fetchUsers();
+      } catch (error) {
+        console.error('Error deleting patient:', error);
+      }
+    };
 
     return {
       users,
@@ -152,6 +169,7 @@ export default {
       detailsDialogVisible,
       selectedPatient,
       tableHeight,
+      handleDelete,
     };
   },
 };
