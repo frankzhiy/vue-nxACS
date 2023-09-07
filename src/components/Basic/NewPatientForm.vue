@@ -9,8 +9,6 @@
 
 <script>
 import FormTabs from "@/components/Basic/FormTabs.vue";
-import  {mhtFormStore, baseFormStore, testFormStore, anFormStore, enFormStore, fuFormStore} from "@/store/formStore";
-import {getCurrentInstance, inject} from 'vue';
 import { ref } from 'vue'
 import {ElMessage} from "element-plus";
 import {submitPatientData} from "@/utils/api";
