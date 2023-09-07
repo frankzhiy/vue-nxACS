@@ -15,6 +15,8 @@
 import Echocardiography from "@/components/FormTemplates/EC/Echocardiography.vue";
 import {useWindowHeightWatcher} from "@/utils/windowHeightWatcher";
 import {computed} from "vue";
+import {enFormStore} from "@/store/formStore";
+const formStore =enFormStore()
 export default {
 
   name: "EchocardiographyTemplates",
@@ -36,7 +38,11 @@ export default {
       // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
       return windowHeight.value - 250;
     });
+    const getData = () => {
+      return formStore.form;
+    }
     return {
+      getData,
       tableHeight,
     };
   }

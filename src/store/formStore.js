@@ -1,5 +1,15 @@
 import { defineStore } from 'pinia'
 
+export const baseFormStore = defineStore({
+    id: 'caseFormStore',
+    state:() =>({
+        baseForm:{
+            caseNumber : '',
+            timeOfAdmission : '' ,
+            manageDoctors :''
+        }
+    })
+})
 export const testFormStore = defineStore({
     id: 'testFormStore',
     state: () => ({

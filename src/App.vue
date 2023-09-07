@@ -39,9 +39,10 @@ nav a.router-link-exact-active {
   display: flex;
   align-items: center;
 }
+
 /*禁止全局滚动*/
 html,
-body {
+body{
   margin: 0;
   padding: 0;
   height: 100%;

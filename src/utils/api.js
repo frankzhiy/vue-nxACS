@@ -51,3 +51,15 @@ export const getCaseDetails = async (caseNumber, url) => {
 // };
 
 // 添加更多的 API 函数...
+
+
+// 提交患者数据
+export const submitPatientData = async (formData) => {
+    try {
+        //TODO: 待添加具体地址
+        const response = await http.post('/basic/submit', formData);
+        return response;
+    } catch (error) {
+        handleError(error, 'Error submitting patient data:');
+    }
+};

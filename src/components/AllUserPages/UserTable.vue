@@ -2,15 +2,15 @@
     <el-table stripe :data="displayedUsers" :fit="true" :max-height="tableHeight"
               :header-row-style="{ height: '60px',fontSize: '16px' }">
       <el-table-column prop="serialNumber" label="序号" width="60"></el-table-column>
-      <el-table-column prop="caseNumber" label="案例编号" width="100"></el-table-column>
-      <el-table-column prop="timeOfAdmission" label="入院时间" width="100"></el-table-column>
+      <el-table-column prop="caseNumber" label="案例编号" width="90"></el-table-column>
+      <el-table-column prop="timeOfAdmission" label="入院时间" width="110"></el-table-column>
       <el-table-column label="列4"></el-table-column>
       <el-table-column label="列5"></el-table-column>
       <el-table-column label="列6"></el-table-column>
       <el-table-column label="列7"></el-table-column>
       <el-table-column label="列8"></el-table-column>
       <el-table-column label="列9"></el-table-column>
-      <el-table-column label="操作" fixed="right">
+      <el-table-column label="操作" fixed="right" width="60">
         <template v-slot="{ row }">
           <el-button link type="info" style="display: inline-block" @click="viewDetails(row)">详情
           </el-button>
@@ -60,8 +60,15 @@ export default {
     // 请求数据
     // TODO:修改提示失败框
     const fetchUsers = async () => {
+      //TODO：需要修改管理医生
       const manageDoctors = 1001; // 登陆后缓存的用户信息替代。设置为你想要的 manageDoctors 值
       const response = await getAllUser(manageDoctors);
+
+      // 患者进行排序
+      const sortedUsers = response.sort((a, b) => {
+        return new Date(b.timeOfAdmission) - new Date(a.timeOfAdmission); // 降序
+      });
+
       users.value = response;
       localStorage.setItem("users", JSON.stringify(response));
     };
@@ -118,28 +125,12 @@ export default {
       pageSize.value = newSize;
       currentPage.value = 1;
     };
-
-    //自适应患者数量
-    // function updatePageSize() {
-    //   const headerHeight = 50; // 根据实际情况调整表头高度
-    //   const footerHeight = 50; // 根据实际情况调整分页器高度
-    //   const rowHeight = 50;    // 根据实际情况调整行高
-    //   const availableHeight = window.innerHeight - headerHeight - footerHeight;
-    //   const rowsPerPage = Math.floor(availableHeight / rowHeight);
-    //   pageSize.value = Math.max(rowsPerPage, 1); // 确保每页至少显示一条记录
-    // };
+    //自适应高度
     const { windowHeight } = useWindowHeightWatcher();
     const tableHeight = computed(() => {
       // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
       return windowHeight.value - 250;
     });
-
-    // 计算表格高度
-    // const tableHeight = computed(() => {
-    //   // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
-    //   return window.innerHeight - 250;
-    // });
-
 
     onMounted(() => {
       fetchUsers();

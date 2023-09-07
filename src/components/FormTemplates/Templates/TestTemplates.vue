@@ -50,7 +50,11 @@ export default defineComponent({
       // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
       return windowHeight.value - 250;
     });
+    const getData = () => {
+      return formStore.form;
+    }
     return {
+      getData,
       tableHeight,
     };
   },

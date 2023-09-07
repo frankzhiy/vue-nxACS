@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar class="scroll-container" :height="tableHeight">
-    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" title="基础信息">
+    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" class="elds" title="基础信息">
       <el-descriptions-item label="身高">
         {{ attributeData.h }} cm
       </el-descriptions-item>
@@ -45,7 +45,7 @@
         </el-descriptions>
       </el-descriptions-item>
     </el-descriptions>
-    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" title="入院途径">
+    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" class="elds" title="入院途径">
       <el-descriptions-item label="我院就诊？">{{ attributeData.r2 === '1' ? '是' : '否' }}</el-descriptions-item>
       <div v-if="attributeData.r2 === '1'">
         <el-descriptions-item label="我院急诊">{{ attributeData.r21 === '1' ? '是' : '否' }}</el-descriptions-item>
@@ -85,7 +85,7 @@
 
       </div>
     </el-descriptions>
-    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" title="手术信息">
+    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" class="elds" title="手术信息">
       <el-descriptions-item label="是否手术？">{{ attributeData.operate === '1' ? '是' : '否' }}</el-descriptions-item>
       <el-descriptions-item label="手术日期">{{ attributeData.date2 }}</el-descriptions-item>
       <el-descriptions-item label="术者">
@@ -112,7 +112,7 @@
       <el-descriptions-item label="对比剂使用计量">{{ attributeData.q3 }} ml</el-descriptions-item>
       <el-descriptions-item label="肝素使用计量">{{ attributeData.q4 }} u</el-descriptions-item>
     </el-descriptions>
-    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" title="冠脉基本特征">
+    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" class="elds" title="冠脉基本特征">
       <el-descriptions-item label="穿刺血管途径" :span="3">
         <el-descriptions>
           <el-descriptions-item label="右桡动脉">{{ attributeData.q51 === '1' ? '是' : '否' }}</el-descriptions-item>
@@ -266,7 +266,7 @@
         </el-descriptions>
       </el-descriptions-item>
     </el-descriptions>
-    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" title="罪犯血管特征">
+    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" class="elds" title="罪犯血管特征">
       <el-descriptions-item label="梗死相关动脉（IRA）及狭窄程度" :span="3">
         <el-descriptions>
           <el-descriptions-item label="左主干" :span="attributeData.q81 === '1' ? 2 : 3">
@@ -337,7 +337,7 @@
 
 
     </el-descriptions>
-    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" title="罪犯血管介入过程">
+    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" class="elds" title="罪犯血管介入过程">
       <el-descriptions-item label="罪犯血管是否行介入治疗？" :span="2">
         {{['未行手术治疗', '急诊手术', '院内择期手术'][attributeData.q19] }}
       </el-descriptions-item>
@@ -425,7 +425,7 @@
         </el-descriptions-item>
       </div>
     </el-descriptions>
-    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" title="非罪犯血管介入过程">
+    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" class="elds" title="非罪犯血管介入过程">
       <el-descriptions-item label="非罪犯血管是否行介入治疗？" :span="2">
         {{
           ['未行手术治疗', '急诊手术', '院内择期手术']
@@ -584,7 +584,7 @@
         {{ attributeData.q251 }} 月
       </el-descriptions-item>
     </el-descriptions>
-    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" title="术中辅助治疗">
+    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" class="elds" title="术中辅助治疗">
       <el-descriptions-item label="临时起搏器" :span="2">
         {{ attributeData.q27 === '1' ? '是' : '否' }}
       </el-descriptions-item>
@@ -628,7 +628,7 @@
         </el-descriptions-item>
       </div>
     </el-descriptions>
-    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" title="术中并发症">
+    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" class="elds" title="术中并发症">
       <el-descriptions-item label="术中是否出现并发症？" :span="2">
         {{ attributeData.q31 === '1' ? '是' : '否' }}
       </el-descriptions-item>
@@ -687,7 +687,7 @@
         </div>
       </div>
     </el-descriptions>
-    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" title="出院医嘱">
+    <el-descriptions border :column="3" :size="'small'" v-if="attributeData" class="elds" title="出院医嘱">
       <el-descriptions-item label="阿司匹林">
         {{ attributeData.f1 === '1' ? '是' : '否' }}
       </el-descriptions-item>
@@ -776,5 +776,7 @@ export default {
 </script>
 
 <style scoped>
-
+.elds{
+  margin-bottom: 10px;
+}
 </style>

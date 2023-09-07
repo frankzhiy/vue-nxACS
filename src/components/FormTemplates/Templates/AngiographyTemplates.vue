@@ -22,6 +22,8 @@ import BasicInformation from "@/components/FormTemplates/AN/BasicInformation.vue
 import DischargeInstructions from "@/components/FormTemplates/AN/DischargeInstructions.vue";
 import {useWindowHeightWatcher} from "@/utils/windowHeightWatcher";
 import {computed} from "vue";
+import {anFormStore} from "@/store/formStore";
+
 export default {
 
   name: "Angiography",
@@ -46,7 +48,12 @@ export default {
       // 窗口高度 - 表格顶部和底部的边距 - 分页组件高度
       return windowHeight.value - 250;
     });
+    const  formStore = anFormStore();
+    const getData = () => {
+      return formStore.form;
+    }
     return {
+      getData,
       tableHeight,
     };
   },
