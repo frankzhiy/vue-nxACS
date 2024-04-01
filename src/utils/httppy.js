@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const pythonInstance = axios.create({
-    baseURL: 'http://localhost:5000',  // Python 后端的基础 URL
-    timeout: 30000,  // 请求超时时间
+    baseURL: 'http://localhost:8089',  // Python 后端的基础 URL
+    timeout: 300000,  // 请求超时时间
 });
 
 pythonInstance.interceptors.request.use(

@@ -3,7 +3,7 @@
     <el-container>
       <el-header class="common-header flex-float">
         <div class="flex">
-          <img class="header-img" src="../../assets/logo.png">
+          <img class="header-img" src="../../assets/心血管.png">
           <span>急性冠脉综合症患者管理平台</span>
         </div>
         <userAvatar></userAvatar>
@@ -19,7 +19,7 @@
         >
           <el-menu-item index="/allUser">患者列表</el-menu-item>
           <el-menu-item index="/fellow">患者评估</el-menu-item>
-          <el-menu-item index="/warning">预警患者</el-menu-item>
+<!--          <el-menu-item index="/warning">预警患者</el-menu-item>-->
           <el-menu-item index="/statistic">统计分析</el-menu-item>
         </el-menu>
       </div>

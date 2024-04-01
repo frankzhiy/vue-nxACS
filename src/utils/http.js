@@ -4,7 +4,7 @@ import axios from 'axios';
 // 创建axios实例
 const instance = axios.create({
     baseURL: 'http://localhost:8087/acsPlatform', // API的基础URL
-    timeout: 30000, // 请求超时时间
+    timeout: 300000, // 请求超时时间
 });
 
 // 请求拦截器

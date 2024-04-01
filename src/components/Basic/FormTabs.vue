@@ -38,7 +38,8 @@ import AngiographyTemplates from "@/components/FormTemplates/Templates/Angiograp
 import BaseInfoTemplates from "@/components/FormTemplates/Templates/BaseInfoTemplates.vue";
 // import { useFormStore } from '@/store/formStore'
 // const  formStore = useFormStore();
-import {inject, ref} from "vue";
+import {ref} from "vue";
+
 export default {
 
   components: {
@@ -73,11 +74,11 @@ export default {
     };
     const collectAllFormData = () => {
       const baseInfo = baseInfoTemplates.value.getData();
-      const medicalHistory= medicalHistoryTemplates.value.getData();
-      const angiography= angiographyTemplates.value.getData();
-      const echocardiography= echocardiographyTemplates.value.getData();
-      const followUp= followUpTemplates.value.getData();
-      const test= testTemplates.value.getData();
+      const medicalHistory = medicalHistoryTemplates.value.getData();
+      const angiography = angiographyTemplates.value.getData();
+      const echocardiography = echocardiographyTemplates.value.getData();
+      const followUp = followUpTemplates.value.getData();
+      const test = testTemplates.value.getData();
       return {
         baseInfo,
         medicalHistory,
@@ -85,7 +86,6 @@ export default {
         echocardiography,
         followUp,
         test
-        // ... 其他表单数据
       };
     }
 

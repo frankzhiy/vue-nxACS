@@ -1,7 +1,9 @@
 <template>
 
-  <el-button plain type="primary" @click="addNewPatient" size="small" >
-    <el-icon><Plus /></el-icon>
+  <el-button plain type="primary" @click="addNewPatient" size="small">
+    <el-icon>
+      <Plus/>
+    </el-icon>
     <span>添加新患者</span>
   </el-button>
 
